@@ -1,0 +1,44 @@
+<a routerLink="/list">查看列表</a>
+
+<div>
+  <section>岛名：大牛逼岛</section>
+  <section>岛主SW：1234-1234-1234</section>
+  <section>萝卜价格：500</section>
+  <section>入岛密码：12345</section>
+  <section>开岛时间：12345</section>
+  <section>关岛时间：12345</section>
+  <section>注意事项，导航：出门左转，不要采花，礼物请邮寄</section>
+</div>
+
+
+<div style="margin-top: 1rem">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+
+    <ng-container matColumnDef="sw">
+      <th mat-header-cell *matHeaderCellDef> SW </th>
+      <td mat-cell *matCellDef="let element"> {{element.sw}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nickname">
+      <th mat-header-cell *matHeaderCellDef> 昵称 </th>
+      <td mat-cell *matCellDef="let element"> {{element.nickname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="enqueueTime">
+      <th mat-header-cell *matHeaderCellDef> 入队时间 </th>
+      <td mat-cell *matCellDef="let element"> {{element.enqueueTime | date : 'shortTime'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dequeueTime">
+      <th mat-header-cell *matHeaderCellDef> 传递时间 </th>
+      <td mat-cell *matCellDef="let element"> {{element.dequeueTime | date : 'shortTime'}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        class="row-hover"></tr>
+  </table>
+
+
+</div>

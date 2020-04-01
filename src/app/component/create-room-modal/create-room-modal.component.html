@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>
+	<span fxFlex>
+    开岛~
+	</span>
+  <span fxFlex fxLayoutAlign="end end">
+		<mat-icon class="primary-light-color" style="cursor: pointer;" (click)="closeDialog()">close</mat-icon>
+	</span>
+</h2>
+<mat-divider></mat-divider>
+
+<mat-dialog-content style="padding: 1.5rem 1.5rem 1rem 1.5rem;margin:1px;font-size: 12px;">
+
+  <form [formGroup]="createIslandForm">
+
+    <mat-radio-group formControlName="roomType">
+      <mat-radio-button value="buy">
+        买萝卜
+      </mat-radio-button>
+      <mat-radio-button value="sell">
+        卖萝卜
+      </mat-radio-button>
+    </mat-radio-group>
+
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <div fxFlex>
+        <mat-form-field style="width:100%" >
+          <input matInput placeholder="菜价" formControlName="price" type="number"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <div fxFlex>
+        <mat-form-field style="width:100%" >
+          <input matInput placeholder="开放时间(分钟)" formControlName="openTime" type="number"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <div fxFlex>
+        <mat-label>上岛人数</mat-label>
+        <mat-select formControlName="pplCount">
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+          <mat-option [value]="4">4</mat-option>
+          <mat-option [value]="5">5</mat-option>
+          <mat-option [value]="6">6</mat-option>
+          <mat-option [value]="7">7</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <div fxFlex>
+        <mat-form-field style="width:100%" >
+          <input matInput placeholder="上岛密码" formControlName="islandPass" type="text"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2rem">
+      <div fxFlex>
+        <mat-form-field style="width:100%" >
+          <input matInput placeholder="注意事项/导航" formControlName="otherInfo" type="text"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div fxLayoutAlign="end end" fxLayoutGap="1rem">
+      <button class="focused-button" mat-raised-button color="primary" (click)="submit()"
+              [disabled]="!this.createIslandForm.valid"
+              *ngIf="!isRequestInProgress">
+        开岛
+      </button>
+      <mat-spinner [diameter]="30" *ngIf="isRequestInProgress"></mat-spinner>
+    </div>
+  </form>
+</mat-dialog-content>

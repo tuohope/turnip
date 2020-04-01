@@ -1,0 +1,39 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="sw">
+    <th mat-header-cell *matHeaderCellDef> 岛主SW </th>
+    <td mat-cell *matCellDef="let element"> {{element.sw}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nickname">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.nickname}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> 萝卜价格 </th>
+    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="openTime">
+    <th mat-header-cell *matHeaderCellDef> 开岛时间 </th>
+    <td mat-cell *matCellDef="let element"> {{element.openTime | date : 'shortTime'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="closeTime">
+    <th mat-header-cell *matHeaderCellDef> 关岛时间 </th>
+    <td mat-cell *matCellDef="let element"> {{element.closeTime | date : 'shortTime'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="queueSize">
+    <th mat-header-cell *matHeaderCellDef> 排队人数 </th>
+    <td mat-cell *matCellDef="let element"> {{element.queueSize}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      class="row-hover"
+      style="cursor: pointer"
+      routerLink="/room"></tr>
+</table>
