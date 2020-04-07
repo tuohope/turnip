@@ -14,8 +14,13 @@ import {Island, TurnipExchangeResponse} from '../../../interface/Island';
 
 export class BuyTurnipComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'fruit', 'turnipPrice', 'islandTime', 'creationTime', 'queued'];
+
+  allColumns = ['name', 'fruit', 'turnipPrice', 'turnipCode', 'hemisphere', 'islandTime', 'creationTime', 'queued', 'description'];
+
+  displayedColumns: string[] = ['name', 'turnipPrice', 'hemisphere', 'islandTime', 'queued', 'description'];
   dataSource = new MatTableDataSource<Island>();
+
+
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -26,10 +31,9 @@ export class BuyTurnipComponent implements OnInit {
     this.fetchData();
   }
 
-
   fetchData() {
     this.dataService.getIslands().subscribe((res: TurnipExchangeResponse) => {
-      this.dataSource = new MatTableDataSource(res.islands.sort((a,b) => b.turnipPrice - a.turnipPrice));
+      this.dataSource = new MatTableDataSource(res.islands.sort((a, b) => b.turnipPrice - a.turnipPrice));
       this.dataSource.sort = this.sort;
     }, err => {
       alert(JSON.stringify(err));
@@ -41,5 +45,30 @@ export class BuyTurnipComponent implements OnInit {
     window.open(url);
   }
 
+  checkColumn(column: string) {
+    const displayed = new Set(this.displayedColumns);
+
+    return displayed.has(column);
+  }
+
+  toggleColumn(event, column: string){
+    event.preventDefault();
+    const displayed = new Set(this.displayedColumns);
+    if (displayed.has(column)) {
+        displayed.delete(column);
+    } else {
+        displayed.add(column);
+    }
+
+    const newDisplayedColumns = [];
+
+    for (const cln of this.allColumns) {
+        if (displayed.has(cln)){
+          newDisplayedColumns.push(cln);
+        }
+    }
+
+    this.displayedColumns = newDisplayedColumns;
+  }
 
 }

@@ -8,6 +8,13 @@ export interface Island{
   creationTime: Date;
   description: string;
   queued: number;
+  visitorCount: number;
+  visitorLimit: number;
+  private: boolean;
+  gateStatus: number;
+  maxQueue: number;
+  locked: number;
+
 }
 
 export interface TurnipExchangeResponse {
