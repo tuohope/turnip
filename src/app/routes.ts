@@ -7,9 +7,9 @@ export const routes: Routes = [
     path: 'list',
     component: ListComponent,
   },
-  {
-    path: 'room',
-    component: RoomDetailComponent,
-  },
+  // {
+  //   path: 'room',
+  //   component: RoomDetailComponent,
+  // },
   { path: '**', redirectTo: '/list', pathMatch: 'full' },
 ];

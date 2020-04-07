@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import * as faker from 'faker';
+import {DataService} from '../../../service/data.service';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {Island, TurnipExchangeResponse} from '../../../interface/Island';
 
 @Component({
   selector: 'app-buy-turnip',
@@ -11,23 +14,32 @@ import * as faker from 'faker';
 
 export class BuyTurnipComponent implements OnInit {
 
-  displayedColumns: string[] = ['nickname', 'price', 'openTime', 'closeTime', 'queueSize'];
-  dataSource = [];
+  displayedColumns: string[] = ['name', 'fruit', 'turnipPrice', 'islandTime', 'creationTime', 'queued'];
+  dataSource = new MatTableDataSource<Island>();
 
-  constructor(private router: Router) {
-    for (let i = 0; i < 5; i++) {
-      this.dataSource.push({
-        sw: faker.phone.phoneNumber(),
-        nickname : faker.name.firstName(),
-        price: (Math.random() * 10000) % 850 >> 0,
-        openTime : faker.date.recent(),
-        closeTime : faker.date.recent(),
-        queueSize : 5
-      });
-    }
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  constructor(private router: Router, private dataService: DataService) {
   }
 
   ngOnInit() {
+    this.fetchData();
   }
+
+
+  fetchData() {
+    this.dataService.getIslands().subscribe((res: TurnipExchangeResponse) => {
+      this.dataSource = new MatTableDataSource(res.islands.sort((a,b) => b.turnipPrice - a.turnipPrice));
+      this.dataSource.sort = this.sort;
+    }, err => {
+      alert(JSON.stringify(err));
+    });
+  }
+
+  goTo(code: string){
+    const url = `https://turnip.exchange/island/${code}`;
+    window.open(url);
+  }
+
 
 }
