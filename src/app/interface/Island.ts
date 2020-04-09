@@ -14,6 +14,7 @@ export interface Island{
   gateStatus: number;
   maxQueue: number;
   locked: number;
+  commerce: string;
 
 }
 

@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-create-room-modal',
   templateUrl: './create-room-modal.component.html',
-  styleUrls: ['./create-room-modal.component.css']
+  styleUrls: ['./create-room-modal.component.scss']
 })
 export class CreateRoomModalComponent implements OnInit {
   createIslandForm: FormGroup;

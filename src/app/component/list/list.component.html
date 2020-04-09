@@ -1,23 +1,23 @@
-<div fxLayout="row" style="margin-bottom: 1rem">
-  <section>
-    <mat-radio-group [(ngModel)]="viewType">
-      <mat-radio-button value="buy">
-        买萝卜
-      </mat-radio-button>
-      <!--<mat-radio-button value="sell">-->
-        <!--卖萝卜-->
+<!--<div fxLayout="row" style="margin-bottom: 1rem">-->
+  <!--<section>-->
+    <!--<mat-radio-group [(ngModel)]="viewType">-->
+      <!--<mat-radio-button value="buy">-->
+        <!--买萝卜-->
       <!--</mat-radio-button>-->
-      <!--<mat-radio-button value="smith">-->
-      <!--铁匠铺-->
-      <!--</mat-radio-button>-->
-    </mat-radio-group>
-  </section>
+      <!--&lt;!&ndash;<mat-radio-button value="sell">&ndash;&gt;-->
+        <!--&lt;!&ndash;卖萝卜&ndash;&gt;-->
+      <!--&lt;!&ndash;</mat-radio-button>&ndash;&gt;-->
+      <!--&lt;!&ndash;<mat-radio-button value="smith">&ndash;&gt;-->
+      <!--&lt;!&ndash;铁匠铺&ndash;&gt;-->
+      <!--&lt;!&ndash;</mat-radio-button>&ndash;&gt;-->
+    <!--</mat-radio-group>-->
+  <!--</section>-->
 
-  <section fxLayoutAlign="end">
-    <!--<button (click)="openCreateRoomModal()">我要开岛</button>-->
-  </section>
-</div>
+  <!--<section fxLayoutAlign="end">-->
+    <!--&lt;!&ndash;<button (click)="openCreateRoomModal()">我要开岛</button>&ndash;&gt;-->
+  <!--</section>-->
+<!--</div>-->
 
 
 <app-buy-turnip *ngIf="viewType === 'buy'"></app-buy-turnip>
-<app-sell-turnip *ngIf="viewType === 'sell'"></app-sell-turnip>
+<!--<app-sell-turnip *ngIf="viewType === 'sell'"></app-sell-turnip>-->

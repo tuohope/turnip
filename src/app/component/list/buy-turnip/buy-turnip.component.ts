@@ -8,19 +8,24 @@ import {Island, TurnipExchangeResponse} from '../../../interface/Island';
 @Component({
   selector: 'app-buy-turnip',
   templateUrl: './buy-turnip.component.html',
-  styleUrls: ['./buy-turnip.component.css']
+  styleUrls: ['./buy-turnip.component.scss']
 })
 
 
 export class BuyTurnipComponent implements OnInit {
 
+  allColumns = ['name', 'fruit', 'turnipPrice', 'turnipCode', 'commerce', 'hemisphere', 'islandTime', 'creationTime', 'queued', 'description'];
 
-  allColumns = ['name', 'fruit', 'turnipPrice', 'turnipCode', 'hemisphere', 'islandTime', 'creationTime', 'queued', 'description'];
-
-  displayedColumns: string[] = ['name', 'turnipPrice', 'hemisphere', 'islandTime', 'queued', 'description'];
+  displayedColumns: string[] = ['name', 'turnipPrice', 'queued', 'description'];
   dataSource = new MatTableDataSource<Island>();
 
+  dataRefreshRateSec = 30;
+  autoRefresh = false;
 
+  priceLowerBound = null;
+  queueUpperBound = null;
+
+  cachedData = [];
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -29,15 +34,42 @@ export class BuyTurnipComponent implements OnInit {
 
   ngOnInit() {
     this.fetchData();
+    this.fetchDataTimeout();
   }
 
   fetchData() {
     this.dataService.getIslands().subscribe((res: TurnipExchangeResponse) => {
-      this.dataSource = new MatTableDataSource(res.islands.sort((a, b) => b.turnipPrice - a.turnipPrice));
-      this.dataSource.sort = this.sort;
+      this.cachedData = res.islands.sort((a, b) => b.turnipPrice - a.turnipPrice);
+      this.updateDataSource();
     }, err => {
-      alert(JSON.stringify(err));
+      console.log(JSON.stringify(err));
     });
+  }
+
+  updateDataSource() {
+    let data = Array.from(this.cachedData);
+    if (this.priceLowerBound) {
+      data = data.filter(x => x.turnipPrice > this.priceLowerBound);
+    }
+    if (this.queueUpperBound != null) {
+      data = data.filter(x => x.queued < this.queueUpperBound);
+    }
+
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.sort;
+  }
+
+  fetchDataTimeout() {
+    setTimeout( () => {
+      if (this.autoRefresh){
+        this.fetchData();
+      }
+      this.fetchDataTimeout();
+      }, this.dataRefreshRateSec * 1000);
+  }
+
+  descriptionFilter = (str: string) => {
+    this.dataSource.filter = str.trim().toLocaleLowerCase();
   }
 
   goTo(code: string){
