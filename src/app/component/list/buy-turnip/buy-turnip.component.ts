@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {Island, TurnipExchangeResponse} from '../../../interface/Island';
 
+const jlssb = new Audio('../assets/jlssb.wav');
+
 @Component({
   selector: 'app-buy-turnip',
   templateUrl: './buy-turnip.component.html',
@@ -24,6 +26,7 @@ export class BuyTurnipComponent implements OnInit {
 
   priceLowerBound = null;
   queueUpperBound = null;
+  audioAlert = true;
 
   cachedData = [];
 
@@ -47,12 +50,20 @@ export class BuyTurnipComponent implements OnInit {
   }
 
   updateDataSource() {
+    let check1 = false;
+    let check2 = false;
+
     let data = Array.from(this.cachedData);
     if (this.priceLowerBound) {
+      check1 = true;
       data = data.filter(x => x.turnipPrice > this.priceLowerBound);
     }
     if (this.queueUpperBound != null) {
+      check2 = true;
       data = data.filter(x => x.queued < this.queueUpperBound);
+    }
+    if (check1 && check2 && this.audioAlert) {
+      jlssb.play();
     }
 
     this.dataSource = new MatTableDataSource(data);

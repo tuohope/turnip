@@ -22,11 +22,13 @@
   <mat-form-field fxFlex="10%">
     <input matInput type="number" (change)="updateDataSource()" [(ngModel)]="priceLowerBound" placeholder="菜价过滤(高于xx价格)">
   </mat-form-field>
-  {{priceLowerBound}}
 
   <mat-form-field fxFlex="10%">
     <input matInput type="number" (change)="updateDataSource()" [(ngModel)]="queueUpperBound" placeholder="队列过滤(低于xx人)">
   </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="audioAlert">三宝警告</mat-checkbox>
+
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
